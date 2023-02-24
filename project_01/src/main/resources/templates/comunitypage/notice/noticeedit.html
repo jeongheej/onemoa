@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout1}">
+  
+
+<th:block layout:fragment="css">
+		<style>
+		.contentfrag{
+			margin-top: 0px;
+		}
+		</style>
+		
+		</th:block>
+<div layout:fragment="content" class="contentfrag">
+
+	  <div class="page-header" style="background: url(/assets/img/banner1.jpg);">
+        <div class="container">
+          <div class="row">         
+            <div class="col-md-12">
+              <div class="breadcrumb-wrapper">
+                <h2 class="product-title">공지사항</h2>
+                <ol class="breadcrumb">
+                  <li><a href="/"><i class="ti-home"></i> Home</a></li>
+                  <li class="current">공지사항</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Header End -->   
+
+
+
+	<section id="content">
+		<div class="container">
+			<div class="row">
+				<aside id="sidebar" class="col-md-3 right-sidebar">
+				<div class="widget widget-search">
+					<div class="row" sec:authorize="isAnonymous()">
+						<h4 class="widget-title">로그인</h4>
+						<form action="/login" method="post">
+						
+							<div class="form-group is-empty">
+							
+							<input class="form-control search" name="email" type="text" placeholder="아이디"><span class="material-input"></span></div>
+							
+							<div class="form-group is-empty"><input class="form-control search" type="password" name="password" placeholder="비밀번호"><span class="material-input"></span></div>
+							<div class="form-group is-empty"><button class="pull-right btn btn-common log-btn" type="submit">로그인</button></div>
+							
+						</form>
+					</div>
+					<div class="right-sideabr">
+						
+						<div class="inner-box" sec:authorize="isAuthenticated()">
+						
+					
+						 <span th:switch="${memberDto.getRole}">
+						 	<span th:case="'PUSER'">개인회원</span>
+						 	<span th:case="'HUSER'">병원회원</span>
+						 	<span th:case="'ADMIN'">관리자</span>
+						 </span>
+						 <span style="color: black; font-weight: bold;" th:text="${memberDto.getName}"></span>
+						 <span>님, 안녕하세요</span>
+						 <span class="btn btn-logout"><a href="/logout" style="color: white;">로그아웃</a></span>
+						</div>
+					
+					</div>
+				</div>
+
+				<div class="widget widget-categories">
+					<h5 class="widget-title">커뮤니티</h5>
+					<ul class="cat-list">
+						<li>
+						<a href="/comunitypage/notice/noticelist">공지사항 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/comunitypage/review/reviewlist">이용후기 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/comunitypage/question/questionlist">문의사항 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/personalguide">이용안내 <span class="num-posts"></span></a>
+						<div class="widget widget-categories">
+						<ul class="cat-list">
+							<li><a href="/personalguide">&nbsp;&nbsp;&nbsp;&nbsp;
+							개인회원이용안내<span class="num-posts"></span></a>
+							</li>
+							<li><a href="/hospitalguide">&nbsp;&nbsp;&nbsp;&nbsp;
+							병원회원이용안내<span class="num-posts"></span></a>
+							</li>
+						</ul> 
+						</div>
+						</li>
+
+					</ul>
+				</div>
+
+			</aside>
+				<div class="col-md-8"  style="padding-left: 50px;">
+					<form class="contact-form" data-toggle="validator" novalidate="true"
+					th:action="@{/comunitypage/notice/noticeedit}" th:method="post">
+					<div class="row">
+					<div class="col-md-3">
+					</div>
+					<div class="col-md-12">
+						<div class="row">
+							
+							<input type="hidden" class="form-control" name="nno" th:value="${dto.nno}" readonly="readonly">
+							<div class="col-md-12">
+								<div class="form-group is-empty">
+									<input type="text" id="msg_subject" class="form-control" required="" data-error="Please enter your subject"
+									name="title" th:value="${dto.title}">
+									<div class="help-block with-errors">
+									</div>
+									<span class="material-input"></span>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group is-empty">
+									<textarea class="form-control" id="message" rows="11" data-error="Write your message" name="content">
+									[[${dto.content}]]</textarea>
+									<div class="help-block with-errors">
+									</div>
+									<span class="material-input"></span>
+								</div>
+							</div>
+							<div class="col-md-12">
+								<button type="submit" id="submit" class="btn boarderlistbtn-common pull-right" style="pointer-events: all; cursor: pointer;">수정</button>
+								<div id="msgSubmit" class="h3 text-center hidden">
+								</div>
+								<div class="clearfix">
+								</div>
+							</div>
+						</div>
+					  </div>
+				 </div>
+			 </form>
+		 </div>
+	 </div>
+  </div>
+ </section>
+
+
+
+
+</div>
+</html>

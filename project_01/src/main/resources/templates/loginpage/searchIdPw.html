@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+  
+
+<th:block layout:fragment="css">
+		<style>
+		.contentfrag{
+			margin-top: 0px;
+		}
+		</style>
+		
+		</th:block>
+<div layout:fragment="content" class="contentfrag">
+		
+		
+		<!-- Page Header Start -->
+      <div class="page-header" style="background: url(/assets/img/banner1.jpg);">
+        <div class="container">
+          <div class="row">         
+            <div class="col-md-12">
+              <div class="breadcrumb-wrapper">
+                <h2 class="product-title">로그인</h2>
+                <ol class="breadcrumb">
+                  <li><a href="#"><i class="ti-home"></i> Home</a></li>
+                  <li class="current">로그인</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Header End -->    
+		
+	  <div id="content" class="my-account">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-6 cd-user-modal">
+					<div class="my-account-form">
+						<h3>아이디찾기</h3>
+						<br>
+					<div class="page-login-form" id="cd-reset-password"> 
+						
+						<form class="cd-form">
+						<div class="form-group is-empty">
+							<div class="input-icon">
+								<label style="font-size: 14px;">이름</label>
+								<input type="text" id="idname" name="idname" class="form-control" placeholder="가입시 등록한 이름을 입력하세요">
+								<br>
+								<label style="font-size: 14px;">전화번호</label>
+								<input type="text" id="idphone" name="idphone" class="form-control" placeholder="가입시 등록한 전화번호를 입력하세요" 
+								oninput="hypenTel(this)" maxlength="13">
+							</div>
+							<span class="material-input"></span>
+						</div>
+						<p class="fieldset">
+							<button class="btn btn-common log-btn idsearch" onclick="findId_click()" type="button">찾기</button>
+						</p>
+						</form>
+						<p class="cd-form-bottom-message">
+							<a href="/login">로그인 가기</a>
+						</p>
+					</div> 
+				</div>
+				<br>
+				<div class="my-account-form">
+						<h3>비밀번호찾기</h3>
+						<br>
+					<div class="page-login-form" id="cd-reset-password"> 
+						
+						<form class="cd-form" action="/searchpw/sendEmail" method="post" id="sendEmail">
+						<div class="form-group is-empty">
+							
+							<div class="input-icon">
+								<label style="font-size: 14px;">이메일</label>
+								<input type="text" id="email" class="form-control" name="email" placeholder="가입시 등록한 이메일을 입력하세요">
+								<br>
+								
+								<label style="font-size: 14px;">이름</label>
+								<input type="text" id="name" name="name" class="form-control" placeholder="가입시 등록한 이름을 입력하세요">
+								<br>
+								
+								<label style="font-size: 14px;">전화번호</label>
+								<input type="text" id="phone" name="phone" class="form-control" placeholder="가입시 등록한 전화번호를 입력하세요"
+								oninput="hypenTel(this)" maxlength="13">
+							</div>
+							<span class="material-input"></span>
+						</div>
+						<p class="fieldset">
+							<button class="btn btn-common log-btn" id="searchpwd" type="button">찾기</button>
+						</p>
+						</form>
+						<p class="cd-form-bottom-message">
+							<a href="/login">로그인 가기</a>
+						</p>
+						<div class="text-center small mt-2" id="checkMsg" style="color: red"></div>
+					</div> 
+				</div>
+			</div>
+		  </div>
+       </div>
+	 </div>
+	 
+	 <div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-common logingo" data-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <th:block layout:fragment="script">
+	<script th:inline="javascript">
+	
+	//아이디찾기
+	function findId_click(){
+		var name=$('#idname').val()
+		var phone=$('#idphone').val()
+		var modal = $(".modal");
+		const sendEmail = document.forms["sendEmail"];
+		$.ajax({
+			url:"/searchid",
+			type:"POST",
+			data:{"name":name, "phone":phone},
+			success:function(data){
+				if(data == 0){
+					modal.modal('show');
+					$('.modal-title').text("아이디찾기");
+					$('.modal-body').text("일치하는 정보가 없습니다.");
+					
+				} else {
+					modal.modal('show');
+					$('.modal-title').text("아이디찾기");
+					$('.modal-body').text("회원님의 아이디는 "+data+ "입니다.");
+
+				}
+			},
+			 error:function(){
+	                alert("에러입니다");
+	            }
+		});
+	};
+	
+
+	
+	//비밀번호 찾기, 이메일로 전송
+	 $("#searchpwd").click(function () {
+        var email = $("#email").val();
+        var name = $("#name").val();
+        var phone = $("#phone").val();
+        var modal = $(".modal");
+        $.ajax({
+            type: "POST",
+            url: "/searchpw",
+            data: {
+                "email": email,
+                "name": name,
+                "phone": phone
+            },
+            success: function (res) {
+            	if (res['check']){
+            		modal.modal('show');
+            		$('.modal-title').text("비밀번호찾기");
+					$('.modal-body').text('임시비밀번호를 전송 했습니다.');
+				
+					
+				    $(".logingo").click(function () {
+					var sendEmail=$('#sendEmail');
+					sendEmail.attr("action", "/searchpw/sendEmail");
+					sendEmail.attr("method", "post")
+					sendEmail.submit();
+				    })
+                 }else {
+                	 $('.modal-title').text("비밀번호찾기");
+                	 $('.modal-body').text('가입되지 않은 이메일입니다.');
+                 }
+
+             },error: function () {
+                 console.log('에러 체크하세요!')
+             }
+         })
+     });
+	
+	 const hypenTel = (target) => {
+		 target.value = target.value
+		   .replace(/[^0-9]/g, '')
+		   .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+		}
+	</script>
+	 
+</th:block>
+</div>
+</html>

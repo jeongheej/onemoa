@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="author" content="Jobboard">
+    
+    <title>onemoa</title>    
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" type="text/css">    
+    <link rel="stylesheet" href="assets/css/jasny-bootstrap.min.css" type="text/css">  
+    <link rel="stylesheet" href="assets/css/bootstrap-select.min.css" type="text/css">  
+    <!-- Material CSS -->
+    <link rel="stylesheet" href="assets/css/material-kit.css" type="text/css">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css" type="text/css"> 
+    <link rel="stylesheet" href="assets/fonts/themify-icons.css"> 
+
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="assets/extras/animate.css" type="text/css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="assets/extras/owl.carousel.css" type="text/css">
+    <link rel="stylesheet" href="assets/extras/owl.theme.css" type="text/css">
+    <!-- Rev Slider CSS -->
+    <link rel="stylesheet" href="assets/extras/settings.css" type="text/css"> 
+    <!-- Slicknav js -->
+    <link rel="stylesheet" href="assets/css/slicknav.css" type="text/css">
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="assets/css/main.css" type="text/css">
+    <!-- Responsive CSS Styles -->
+    <link rel="stylesheet" href="assets/css/responsive.css" type="text/css">
+
+    <!-- Color CSS Styles  -->
+    <link rel="stylesheet" type="text/css" href="assets/css/colors/red.css" media="screen" />
+    <style>
+    	.divwid {
+    		width: 600px
+    	}
+    	
+    </style>
+  </head>
+
+  <body>  
+      <div class="header">    
+        <div class="logo-menu">
+          <nav class="navbar navbar-default main-navigation" role="navigation" data-spy="affix" data-offset-top="50">
+            <div class="container">
+            
+            
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo" href="/"><img src="assets/img/logo2.png" alt=""></a>
+              </div>
+
+              <div class="collapse navbar-collapse" id="navbar">              
+                 <!-- Start Navigation List -->
+                 <ul class="nav navbar-nav">
+                  <li>
+                    <a class="active" href="/">
+                    Home <i class="fa fa-angle-down"></i>
+                    </a>
+                   
+                  </li>
+                  <li>
+                    <a href="/reservation">
+                    병원예약 <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown">
+                      <li>
+                        <a href="/reservation">
+                        예약가능병원
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/totalhospital">
+                        전체병원검색
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="/checkreservation">
+                    마이페이지 <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown">
+                      <li>
+                        <a href="/checkreservation">
+                        예약조회 및 취소
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/checkpatient">
+                        예약환자조회
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/searchlist">
+                        최근검색목록
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/likelist">
+                        찜목록
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/personalinfo">
+                        회원정보
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="noticlist">
+                    커뮤니티 <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown">
+                      <li>
+                        <a href="/noticlist">
+                        공지사항
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/reviewlist">
+                        이용후기
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/questionlist">
+                        문의사항
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/personalguide">
+                        이용안내
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right float-right">
+                  <li class="left"><a href="/registertype"><i class="ti-pencil-alt"></i> 회원가입</a></li>
+                  <li class="right"><a href="/login"><i class="ti-lock"></i>  로그인</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- Mobile Menu Start -->
+            <ul class="wpb-mobile-menu">
+              <li>
+                <a href="/">Home</a>                    
+              </li>
+              <li>
+                <a href="/reservation">병원예약</a>
+                <ul>
+                  <li><a href="/reservation">예약가능병원</a></li>
+                  <li><a href="/totalhospital">전체병원검색</a></li>
+                </ul>
+              </li>
+              <li>
+                <a class="active" href="#">마이페이지</a>
+                <ul>
+                  <li><a class="active" href="#">예약조회및취소</a></li>
+                  <li><a href="#">예약환자조회</a></li>
+                  <li><a href="#">최근검색목록</a></li>
+                  <li><a href="#">찜목록</a></li>
+                  <li><a href="#">회원정보</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="/noticlist">커뮤니티</a>
+                <ul>
+                  <li><a href="/noticlist">공지사항</a></li>
+                  <li><a href="/reviewlist">이용후기</a></li>
+                  <li><a href="/questionlist">문의사항</a></li>
+                  <li><a href="#">이용안내</a></li>
+                </ul>
+              </li> 
+              <li class="btn-m"><a href="/registertype"><i class="ti-pencil-alt"></i> 회원가입</a></li>
+              <li class="btn-m"><a href="/login"><i class="ti-lock"></i>  로그인</a></li>          
+            </ul>
+            <!-- Mobile Menu End --> 
+            
+            
+          </nav>
+        </div>
+      </div>
+      <!-- Header Section End --> 
+
+      <!-- Page Header Start -->
+      <div class="page-header" style="background: url(assets/img/banner1.jpg);">
+        <div class="container">
+          <div class="row">         
+            <div class="col-md-12">
+              <div class="breadcrumb-wrapper">
+                <h2 class="product-title">마이페이지</h2>
+                <ol class="breadcrumb">
+                  <li><a href="#"><i class="ti-home"></i> Home</a></li>
+                  <li class="current">최근검색목록</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Header End -->      
+
+      <!-- Job Browse Section Start -->  
+      <section class="job-browse section">
+        <div class="container">
+          <div class="row">
+          	<aside id="sidebar" class="col-md-3 right-sidebar">
+          	
+				<div class="widget widget-search">
+					<div class="row">
+						<h4 class="widget-title">로그인</h4>
+						<form action="#">
+						
+							<div class="form-group is-empty">
+							<div align="right">
+							<input type="radio" name="loginselect" value="개인">개인
+								<input type="radio" name="loginselect" value="병원">병원
+								<input class="form-control search" type="text" placeholder="아이디"><span class="material-input"></span></div>
+							</div>
+							<div class="form-group is-empty"><input class="form-control search" type="password" placeholder="비밀번호"><span class="material-input"></span></div>
+							<div class="form-group is-empty"><button class="pull-right btn btn-common log-btn" type="submit">로그인</button></div>
+							
+						</form>
+					</div>
+				</div>
+
+				<div class="widget widget-categories">
+					<h5 class="widget-title">마이페이지</h5>
+					<ul class="cat-list">
+						<li>
+						<a href="/checkreservation">예약조회 및 취소<span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/checkpatient">예약환자조회<span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/searchlist">최근검색목록 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/likelist">찜목록<span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/personalinfo">회원정보<span class="num-posts"></span></a>
+						</li>
+
+					</ul>
+				</div>
+
+			</aside>
+          
+            <div class="col-md-9 col-sm-8">
+            
+              <h3>최근검색목록 </h3>
+              <br>
+              <div class="job-list">
+                <div class="thumb">
+                  <a href="detail.html"><img src="assets/img/jobs/img-1.jpg" alt=""></a>
+                </div>
+                <div class="job-list-content divwid">
+                  <h4><a href="detail.html">서울삼성정형외과</a><span class="full-time">예약가능</span></h4>
+                  <p>서울시 금천구 독산동</p>
+                  <div class="job-tag">
+                    <div class="pull-left">
+                      <div class="meta-tag">
+                        <span><a href="browse-categories.html"><i class="ti-brush"></i>정형외과</a></span>
+                        <span><i class="ti-location-pin"></i>서울시</span>
+                        <span><i class="ti-time">예약가능</i></span>
+                      </div>
+                    </div>
+                    <div class="pull-right">
+                      <div class="icon">
+                        <i class="ti-heart"></i>
+                      </div>
+                      <div class="btn btn-common btn-rm" onclick="location.href='/reservationdtl'">상세보기</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="job-list">
+                <div class="thumb">
+                  <a href="detail.html"><img src="assets/img/jobs/img-1.jpg" alt=""></a>
+                </div>
+                <div class="job-list-content divwid">
+                  <h4><a href="detail.html">서울삼성정형외과</a><span class="full-time">예약가능</span></h4>
+                  <p>서울시 금천구 독산동</p>
+                  <div class="job-tag">
+                    <div class="pull-left">
+                      <div class="meta-tag">
+                        <span><a href="browse-categories.html"><i class="ti-brush"></i>정형외과</a></span>
+                        <span><i class="ti-location-pin"></i>서울시</span>
+                        <span><i class="ti-time">예약가능</i></span>
+                      </div>
+                    </div>
+                    <div class="pull-right">
+                      <div class="icon">
+                        <i class="ti-heart"></i>
+                      </div>
+                      <div class="btn btn-common btn-rm" onclick="location.href='/reservationdtl'">상세보기</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="job-list">
+                <div class="thumb">
+                  <a href="job-details.html"><img src="assets/img/jobs/img-2.jpg" alt=""></a>
+                </div>
+                <div class="job-list-content divwid">
+                  <h4><a href="job-details.html">이비인후과</a><span class="part-time">예약불가</span></h4>
+                  <p>서울시 구로구</p>
+                  <div class="job-tag">
+                    <div class="pull-left">
+                      <div class="meta-tag">
+                        <span><a href="#"><i class="ti-desktop"></i>이비인후과</a></span>
+                        <span><i class="ti-location-pin"></i>서울시</span>
+                        <span><i class="ti-time"></i>예약불가</span>
+                      </div>
+                    </div>
+                    <div class="pull-right">
+                      <div class="icon">
+                        <i class="ti-heart"></i>
+                      </div>
+                      <div class="btn btn-common btn-rm" onclick="location.href='/reservationdtl'">상세보기</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="job-list">
+                <div class="thumb">
+                  <a href="job-details.html"><img src="assets/img/jobs/img-3.jpg" alt=""></a>
+                </div>
+                <div class="job-list-content divwid">
+                  <h4><a href="job-details.html">가정의학과</a><span class="full-time">예약가능</span></h4>
+                  <p>서울시 금천구</p>
+                  <div class="job-tag">
+                    <div class="pull-left">
+                      <div class="meta-tag">
+                        <span><a href="browse-categories.html"><i class="ti-desktop"></i>가정의학과</a></span>
+                        <span><i class="ti-location-pin"></i>서울시</span>
+                        <span><i class="ti-time"></i>예약가능</span>
+                      </div>
+                    </div>
+                    <div class="pull-right">
+                      <div class="icon">
+                        <i class="ti-heart"></i>
+                      </div>
+                      <div class="btn btn-common btn-rm" onclick="location.href='/reservationdtl'">상세보기</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="job-list">
+                <div class="thumb">
+                  <a href="job-details.html"><img src="assets/img/jobs/img-3.jpg" alt=""></a>
+                </div>
+                <div class="job-list-content divwid">
+                  <h4><a href="job-details.html">피부과</a><span class="full-time">예약가능</span></h4>
+                  <p>서울시 마포구</p>
+                  <div class="job-tag">
+                    <div class="pull-left">
+                      <div class="meta-tag">
+                        <span><a href="browse-categories.html"><i class="ti-desktop"></i>피부과</a></span>
+                        <span><i class="ti-location-pin"></i>서울시</span>
+                        <span><i class="ti-time"></i>예약가능</span>
+                      </div>
+                    </div>
+                    <div class="pull-right">
+                      <div class="icon">
+                        <i class="ti-heart"></i>
+                      </div>
+                      <div class="btn btn-common btn-rm" onclick="location.href='/reservationdtl'">상세보기</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            
+           
+          </div>
+        </div>
+      </section>
+      <!-- Job Browse Section End --> 
+
+      
+   <!-- Footer Section Start -->
+    <footer>
+    	<!-- Footer Area Start -->
+    	<section class="footer-Content">
+    		<div class="container">
+    			<div class="row">
+    				<div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="widget">
+                <h3 class="block-title"><img src="assets/img/logo2.png" class="img-responsive" alt="Footer Logo"></h3>
+                <div class="textwidget">
+                  <p style="color: white;"> 병원 예약사이트 입니다.</p>
+                </div>
+              </div>
+            </div>
+    				<div class="col-md-3 col-sm-6 col-xs-12">
+    					<div class="widget">
+    						<h3 class="block-title">이용안내</h3>
+  							<ul class="menu">
+			                  <li><a href="#">개인회원이용안내</a></li>
+			                  <li><a href="#">병원회원이용안내</a></li>
+			                  
+			                </ul>
+    					</div>
+    				</div>
+    				<div class="col-md-3 col-sm-6 col-xs-12">
+    					
+    					<div class="widget">
+                			<a href="/questionlist" style="color: white;"><h3 class="block-title">문의사항</h3></a>
+                
+             		 	</div>
+             		 	
+    				</div>
+    				<div class="col-md-3 col-sm-6 col-xs-12">
+    					<div class="widget">
+    						<a href="/sitemap" style="color: white;"><h3 class="block-title">사이트맵</h3></a>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</section>
+    	<!-- Footer area End -->
+    	
+    	<!-- Copyright Start  -->
+    	<div id="copyright">
+    		<div class="container">
+    			<div class="row">
+    				<div class="col-md-12">
+              <div class="site-info text-center">
+               Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a>
+              </div>   
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    	<!-- Copyright End -->
+
+    </footer>
+    <!-- Footer Section End -->  
+    
+    <!-- Go To Top Link -->
+    <a href="#" class="back-to-top">
+      <i class="ti-arrow-up"></i>
+    </a>
+
+    <div id="loading">
+      <div id="loading-center">
+        <div id="loading-center-absolute">
+          <div class="object" id="object_one"></div>
+          <div class="object" id="object_two"></div>
+          <div class="object" id="object_three"></div>
+          <div class="object" id="object_four"></div>
+          <div class="object" id="object_five"></div>
+          <div class="object" id="object_six"></div>
+          <div class="object" id="object_seven"></div>
+          <div class="object" id="object_eight"></div>
+        </div>
+      </div>
+    </div>
+        
+    <!-- Main JS  -->
+    <script type="text/javascript" src="assets/js/jquery-min.js"></script>      
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>    
+    <script type="text/javascript" src="assets/js/material.min.js"></script>
+    <script type="text/javascript" src="assets/js/material-kit.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.parallax.js"></script>
+    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.slicknav.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.counterup.min.js"></script>
+    <script type="text/javascript" src="assets/js/waypoints.min.js"></script>
+    <script type="text/javascript" src="assets/js/jasny-bootstrap.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="assets/js/form-validator.min.js"></script>
+    <script type="text/javascript" src="assets/js/contact-form-script.js"></script>    
+    <script type="text/javascript" src="assets/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.themepunch.tools.min.js"></script>
+      
+  </body>
+</html>

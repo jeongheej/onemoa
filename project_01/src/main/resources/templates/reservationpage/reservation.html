@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout1}">
+  
+
+<th:block layout:fragment="css">
+		<style>
+		.contentfrag{
+			margin-top: 0px;
+		}
+		.divwid {
+    		width: 650px
+    	}
+		</style>
+		
+		</th:block>
+
+	
+
+
+<div layout:fragment="content" class="contentfrag">
+
+      <!-- Page Header Start -->
+      <div class="page-header" style="background: url(/assets/img/banner1.jpg);">
+        <div class="container">
+          <div class="row">         
+            <div class="col-md-12">
+              <div class="breadcrumb-wrapper">
+                <h2 class="product-title">병원예약</h2>
+                <ol class="breadcrumb">
+                  <li><a href="/"><i class="ti-home"></i> Home</a></li>
+                  <li class="current">병원예약</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Header End -->      
+
+      <!-- Job Browse Section Start -->  
+      <section class="job-browse section">
+        <div class="container">
+          <div class="row">
+          	<aside id="sidebar" class="col-md-3 right-sidebar">
+				<div class="widget widget-search">
+					<div class="row" sec:authorize="isAnonymous()">
+						<h4 class="widget-title">로그인</h4>
+						<form action="/login" method="post">
+						
+							<div class="form-group is-empty">
+							
+							<input class="form-control search" name="email" type="text" placeholder="아이디"><span class="material-input"></span></div>
+							
+							<div class="form-group is-empty"><input class="form-control search" type="password" name="password" placeholder="비밀번호"><span class="material-input"></span></div>
+							<div class="form-group is-empty"><button class="pull-right btn btn-common log-btn" type="submit">로그인</button></div>
+							
+						</form>
+					</div>
+					<div class="right-sideabr">
+						
+						<div class="inner-box" sec:authorize="isAuthenticated()">
+						
+					
+						 <span th:switch="${memberDto.getRole}">
+						 	<span th:case="'PUSER'">개인회원</span>
+						 	<span th:case="'HUSER'">병원회원</span>
+						 	<span th:case="'ADMIN'">관리자</span>
+						 </span>
+						 <span style="color: black; font-weight: bold;" th:text="${memberDto.getName}"></span>
+						 <span>님, 안녕하세요</span>
+						 <span class="btn btn-logout"><a href="/logout" style="color: white;">로그아웃</a></span>
+						</div>
+					
+					</div>
+				</div>
+
+				<div class="widget widget-categories">
+					<h5 class="widget-title">병원예약</h5>
+					<ul class="cat-list">
+						<li>
+						<a href="/reservationpage/reservation">예약가능병원 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/reservationpage/totalhospital">전체병원검색 <span class="num-posts"></span></a>
+						</li>
+
+					</ul>
+				</div>
+
+			</aside>
+          
+            <div class="col-md-9 col-sm-8" style="padding-left: 50px;">
+            
+            <div class="searchhaspital">
+            	<div class="">
+            	<h3>검색</h3>
+            	<br>
+                <div class="thumb">
+                  
+                </div>
+                <div class="searchh-content divwid">
+                  <div class="pull-left">
+                    <form action="/reservationpage/reservation" method="get">
+						
+						<div class="col-md-10 col-sm-6">
+                      <div class="searchh-category-container">
+                        <label class="styled-select">
+                          <select class="dropdown-product selectpicker" name="dutytype">
+                            <option th:selected="${pageRequestDTO.dutytype == null}">분류</option>
+                            <option  value="a" th:selected="${pageRequestDTO.dutytype == 'a'}">종합병원</option>
+                            <option  value="b" th:selected="${pageRequestDTO.dutytype == 'b'}">병원</option>
+                            <option  value="c" th:selected="${pageRequestDTO.dutytype == 'c'}">의원</option>
+                            <option  value="d" th:selected="${pageRequestDTO.dutytype == 'd'}">요양병원</option>
+                            <option  value="e" th:selected="${pageRequestDTO.dutytype == 'e'}">한방병원</option>
+                            <option  value="g" th:selected="${pageRequestDTO.dutytype == 'g'}">한의원</option>
+                            <option  value="i" th:selected="${pageRequestDTO.dutytype == 'i'}">기타</option>
+                        	<option  value="m" th:selected="${pageRequestDTO.dutytype == 'm'}">치과병원</option>
+                            <option  value="n" th:selected="${pageRequestDTO.dutytype == 'n'}">치과의원</option>
+                            <option  value="r" th:selected="${pageRequestDTO.dutytype == 'r'}">보건소</option>
+                          
+                          </select>
+                        </label>
+                      </div>
+                      <br>
+                    </div>
+                
+						<div class="col-md-10 col-sm-6">
+                      <div class="searchh-category-container">
+                        <label class="styled-select">
+                          <select class="dropdown-product selectpicker" name="addresstype">
+                            <option th:selected="${pageRequestDTO.addresstype == null}">지역명</option>
+                            <option value="seo" th:selected="${pageRequestDTO.addresstype == 'seo'}">서울특별시</option>
+                            <option value="bu" th:selected="${pageRequestDTO.addresstype == 'bu'}">부산광역시</option>
+                            <option value="dae" th:selected="${pageRequestDTO.addresstype == 'dae'}">대구광역시</option>
+                            <option value="inc" th:selected="${pageRequestDTO.addresstype == 'inc'}">인천광역시</option>
+                            <option value="daej" th:selected="${pageRequestDTO.addresstype == 'daej'}">대전광역시</option>
+                            <option value="uls" th:selected="${pageRequestDTO.addresstype == 'uls'}">울산광역시</option>
+                            <option value="sej" th:selected="${pageRequestDTO.addresstype == 'sej'}">세종특별자치시</option>                              
+                            <option value="kyu" th:selected="${pageRequestDTO.addresstype == 'kyu'}">경기도</option>
+                            <option value="kang" th:selected="${pageRequestDTO.addresstype == 'kang'}">강원도</option>
+                            <option value="chungn" th:selected="${pageRequestDTO.addresstype == 'chungn'}">충청북도</option>
+                            <option value="chungs" th:selected="${pageRequestDTO.addresstype == 'chungs'}">충청남도</option>
+                            <option value="jeonn" th:selected="${pageRequestDTO.addresstype == 'jeonn'}">전라북도</option>
+                            <option value="jeons" th:selected="${pageRequestDTO.addresstype == 'jeons'}">전라남도</option>
+                            <option value="kyun" th:selected="${pageRequestDTO.addresstype == 'kyun'}">경상북도</option>
+                            <option value="kyur" th:selected="${pageRequestDTO.addresstype == 'kyur'}">경상남도</option>
+                            <option value="je" th:selected="${pageRequestDTO.addresstype == 'je'}">제주특별자치도</option>
+                          </select>
+                        </label>
+                      </div>
+                      <br>
+                    </div>
+						<div class="col-md-10 col-sm-6">
+		                     <div class="form-group">
+		                       <input class="form-control" name="keyword" type="text" placeholder="병원명">
+		                       
+		                     </div>
+		                 </div>
+		                <div class="col-md-10 col-sm-6  ">
+						<div class="searchbtnhospital pull-right">
+						 
+							<input type="submit" value="검색">
+						</div>
+						</div>	
+					</form>
+                  </div>
+                    
+                </div>
+                </div>
+              </div>
+              <br>
+              <br>
+              <h3>예약가능병원</h3>
+              <br>
+              <div class="job-list" th:if="${#lists.size(result.dtoList)} > 0" th:each="dto : ${result.dtoList}" >
+                
+                <div class="job-list-content divwid">
+                  <h4><a th:href="@{/reservationpage/reservationdtl(hpid = ${dto.hpid}, page= ${result.page},
+                    dutytype=${pageRequestDTO.dutytype} , addresstype=${pageRequestDTO.addresstype} ,
+                    keyword = ${pageRequestDTO.keyword})}">[[${dto.dutyName}]]</a><span class="full-time">예약가능</span></h4>
+                 <p>[[${dto.dutyAddr}]]</p>
+                  <div class="job-tag">
+                    <div class="pull-left">
+                      <div class="meta-tag">
+                        <span><i class="ti-location-pin"></i>[[${dto.dutyDivNam}]]</span>
+                        <span><i class="ti-mobile"></i>[[${dto.dutyTel1}]]</span>
+                      </div>
+                    </div>
+                    <div class="pull-right">
+                      
+                      <div class="btn btn-common btn-rm"><a th:href="@{/reservationpage/reservationdtl(hpid = ${dto.hpid}, page= ${result.page},
+                    dutytype=${pageRequestDTO.dutytype} , addresstype=${pageRequestDTO.addresstype} ,
+                    keyword = ${pageRequestDTO.keyword})}" style="color: white;">상세보기</a></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div th:unless="${#lists.size(result.dtoList)} > 0">
+			                    <span style="font-size: 15px;">예약가능한 병원이 없습니다.</span>
+              </div>
+              
+              
+              <!-- Start Pagination -->
+             <div class="boardlist">
+			  <input type="hidden" name="page" value="1">
+              <ul class="pagination" >    
+                      
+                <li class="active page-item " th:if="${result.prev}">
+	        	<a class="page-link btn btn-common" th:href="@{/reservationpage/reservation(page= ${result.start-1},
+                    dutytype=${pageRequestDTO.dutytype} , addresstype=${pageRequestDTO.addresstype} ,
+                    keyword = ${pageRequestDTO.keyword})}" tabindex="-1">
+	        	<i class="ti-angle-left"></i>이전</a></li>
+                <li th:class="'page-item '+${result.page == page?'active':''} " th:each="page : ${result.pageList}">
+        	<a class="page-link" th:href="@{/reservationpage/reservation(page=${page},
+        	 dutytype=${pageRequestDTO.dutytype} , addresstype=${pageRequestDTO.addresstype} ,
+                   keyword = ${pageRequestDTO.keyword})}">[[${page}]]</a></li>
+                <li class="active page-item " th:if="${result.next}">
+        		<a class="page-link btn btn-common" th:href="@{/reservationpage/reservation(page= ${result.end+1},
+                    dutytype=${pageRequestDTO.dutytype} , addresstype=${pageRequestDTO.addresstype} ,
+                    keyword = ${pageRequestDTO.keyword})}">
+        		<i class="ti-angle-right"></i>다음</a></li>
+              </ul>
+              </div>
+              <!-- End Pagination -->
+            </div>
+            
+           
+          </div>
+        </div>
+      </section>
+      <!-- Job Browse Section End --> 
+
+    
+  </div>
+</html>

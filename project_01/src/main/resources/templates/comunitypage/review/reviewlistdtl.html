@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout1}">
+  
+
+<th:block layout:fragment="css">
+		<style>
+		.contentfrag{
+			margin-top: 0px;
+		}
+		</style>
+		
+		</th:block>
+<div layout:fragment="content" class="contentfrag">
+
+		<!-- Page Header Start -->
+      <div class="page-header" style="background: url(/assets/img/banner1.jpg);">
+        <div class="container">
+          <div class="row">         
+            <div class="col-md-12">
+              <div class="breadcrumb-wrapper">
+                <h2 class="product-title">이용후기</h2>
+                <ol class="breadcrumb">
+                  <li><a href="/"><i class="ti-home"></i> Home</a></li>
+                  <li class="current">이용후기</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Header End --> 
+
+
+		<div id="content">
+			<div class="container">
+				<div class="row">
+					<aside id="sidebar" class="col-md-3 right-sidebar">
+						<div class="widget widget-search">
+					<div class="row" sec:authorize="isAnonymous()">
+						<h4 class="widget-title">로그인</h4>
+						<form action="/login" method="post">
+						
+							<div class="form-group is-empty">
+							
+							<input class="form-control search" name="email" type="text" placeholder="아이디"><span class="material-input"></span></div>
+							
+							<div class="form-group is-empty"><input class="form-control search" type="password" name="password" placeholder="비밀번호"><span class="material-input"></span></div>
+							<div class="form-group is-empty"><button class="pull-right btn btn-common log-btn" type="submit">로그인</button></div>
+							
+						</form>
+					</div>
+					<div class="right-sideabr">
+						
+						<div class="inner-box" sec:authorize="isAuthenticated()">
+						
+					
+						 <span th:switch="${memberDto.getRole}">
+						 	<span th:case="'PUSER'">개인회원</span>
+						 	<span th:case="'HUSER'">병원회원</span>
+						 	<span th:case="'ADMIN'">관리자</span>
+						 </span>
+						 <span style="color: black; font-weight: bold;" th:text="${memberDto.getName}"></span>
+						 <span>님, 안녕하세요</span>
+						 <span class="btn btn-logout"><a href="/logout" style="color: white;">로그아웃</a></span>
+						</div>
+					
+					</div>
+				</div>
+		
+						<div class="widget widget-categories">
+					<h5 class="widget-title">커뮤니티</h5>
+					<ul class="cat-list">
+						<li>
+						<a href="/comunitypage/notice/noticelist">공지사항 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/comunitypage/review/reviewlist">이용후기 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/comunitypage/question/questionlist">문의사항 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/personalguide">이용안내 <span class="num-posts"></span></a>
+						<div class="widget widget-categories">
+						<ul class="cat-list">
+							<li><a href="/personalguide">&nbsp;&nbsp;&nbsp;&nbsp;
+							개인회원이용안내<span class="num-posts"></span></a>
+							</li>
+							<li><a href="/hospitalguide">&nbsp;&nbsp;&nbsp;&nbsp;
+							병원회원이용안내<span class="num-posts"></span></a>
+							</li>
+						</ul> 
+						</div>
+						</li>
+
+					</ul>
+				</div>
+		
+					</aside>
+				
+				<div class="col-md-9">
+				<form id="frm">
+					<div class="blog-post">
+					
+					<input type="hidden" name="rno" class="form-control"  th:value="${dto.rno}" readonly="readonly">
+						
+						<div class="post-content">
+							<h3 class="post-title" name="title">[[${dto.title}]]</h3>
+							<div class="meta">
+								<span class="meta-part" name="writerName"><i class="ti-user"></i>[[${dto.writerName}]]</span>
+								<span class="meta-part" name="revisitcount"><i class="ti-book"></i> [[${dto.revisitcount}]]</span>
+								<span class="meta-part" name="updateTime"><i class="ti-calendar"></i>[[${#temporals.format(dto.updateTime, 'yyyy/MM/dd')}]] </span>
+								</div>
+							<div name="content">
+							 [[${dto.content}]]
+							</div>
+						
+						</div>
+					
+					</div>
+					</form>
+					</div>		
+					
+					
+						 <div class="pull-right">
+	                    <a th:href="@{/comunitypage/review/reviewlist(rno = ${dto.rno},
+	                    page= ${requestDTO.page},
+	                    type=${requestDTO.type} ,
+	                    keyword = ${requestDTO.keyword})}">
+						<button type="button" class="btn boarderlistbtn-common">목록</button></a>
+						</div>
+						<div class="pull-right" sec:authorize="isAuthenticated()">
+						<a th:href="@{/comunitypage/review/reviewedit(rno = ${dto.rno},
+	                    page= ${requestDTO.page},
+	                    type=${requestDTO.type} ,
+	                    keyword = ${requestDTO.keyword})}">
+							<button type="button" class="btn boarderlistbtn-common" th:if="${memberDto.email == dto.writerEmail}">수정</button></a>
+							<button type="button" class="btn boarderlistbtn-common BtnRemove" th:if="${memberDto.email == dto.writerEmail}" th:onclick="reviewDelete()">삭제</button>&nbsp;
+							
+	                    </div>
+	                   
+					
+					<br>
+					<br>
+			
+				
+			
+			</div>
+		</div>
+	</div>
+<th:block layout:fragment="script">
+ 
+	<script th:inline="javascript">
+		function reviewDelete() {
+			if(confirm("정말삭제하시겠습니까?")) {
+				var frm=$('#frm');
+				frm.attr("action", "/comunitypage/review/remove");
+				frm.attr("method", "post")
+				frm.submit();
+			}
+		}
+	</script>
+	</th:block>
+   
+   
+</div>
+</html>

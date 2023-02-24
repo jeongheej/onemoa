@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	  
+<head>
+     <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/> 
+</head>
+<div th:fragment="header">
+<div class="header">    
+        <div class="header-banner">
+          <nav class="navbar navbar-default main-navigation" role="navigation" data-spy="affix" data-offset-top="50">
+            <div class="container">
+            
+            
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo" href="/"><img src="/assets/img/logo2.png" alt=""></a>
+              </div>
+
+              <div class="collapse navbar-collapse" id="navbar">              
+                 <!-- Start Navigation List -->
+                <ul class="nav navbar-nav">
+                  <li>
+                    <a class= href="/">
+                    Home <i class="fa fa-angle-down"></i>
+                    </a>
+                   
+                  </li>
+                  <li>
+                    <a href="/reservationpage/reservation">
+                    병원예약 <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown">
+                      <li>
+                        <a href="/reservationpage/reservation">
+                        예약가능병원
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/reservationpage/totalhospital">
+                        전체병원검색
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li sec:authorize="isAuthenticated()">
+                    <a href="/checkreservation">
+                    마이페이지 <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown">
+                      <li sec:authorize="hasRole('PUSER')">
+                        <a href="/checkreservation">
+                        예약조회 및 취소
+                        </a>
+                      </li>
+                      <li sec:authorize="hasRole('HUSER')">
+                        <a href="/checkpatient">
+                        예약환자조회
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/likelist">
+                        찜목록
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/personalinfo">
+                        회원정보
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="/comunitypage/notice/noticelist">
+                    커뮤니티 <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown">
+                      <li>
+                        <a href="/comunitypage/notice/noticelist">
+                        공지사항
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/comunitypage/review/reviewlist">
+                        이용후기
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/comunitypage/question/questionlist">
+                        문의사항
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/personalguide">
+                        이용안내
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right float-right" sec:authorize="isAnonymous()">
+                  <li class="left"><a href="/registertype"><i class="ti-pencil-alt"></i> 회원가입</a></li>
+                  <li class="right"><a href="/login"><i class="ti-lock"></i>  로그인</a></li>
+                </ul>
+                 <ul class="nav navbar-nav navbar-right float-right" sec:authorize="isAuthenticated()">
+                  <li class="left"><a href="/logout"><i class="ti-lock"></i>로그아웃</a></li>
+                 
+                </ul>
+              </div>
+            </div>
+            <!-- Mobile Menu Start -->
+            <ul class="wpb-mobile-menu">
+              <li>
+                <a href="/">Home</a>                    
+              </li>
+              <li>
+                <a href="/reservationpage/reservation">병원예약</a>
+                <ul>
+                  <li><a href="/reservationpage/reservation">예약가능병원</a></li>
+                  <li><a href="/reservationpage/totalhospital">전체병원검색</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#">마이페이지</a>
+                <ul>
+                  <li><a href="#">예약조회및취소</a></li>
+              
+                  <li><a href="#">예약환자조회</a></li>
+               
+                  <li><a href="#">최근검색목록</a></li>
+                  <li><a href="#">찜목록</a></li>
+                  <li><a href="#">회원정보</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="/comunitypage/notice/noticelist">커뮤니티</a>
+                <ul>
+                  <li><a href="/comunitypage/notice/noticelist">공지사항</a></li>
+                  <li><a href="/comunitypage/review/reviewlist">이용후기</a></li>
+                  <li><a href="/comunitypage/question/questionlist">문의사항</a></li>
+                  <li><a href="/personalguide">이용안내</a></li>
+                </ul>
+              </li> 
+              <li class="btn-m"><a href="/registertype"><i class="ti-pencil-alt"></i> 회원가입</a></li>
+              <li class="btn-m"><a href="/login"><i class="ti-lock"></i>  로그인</a></li>          
+            </ul>
+            <!-- Mobile Menu End --> 
+            
+            
+          </nav>
+        </div>
+      </div>
+      
+      <!-- Page Header End -->   
+
+</div>
+</html>

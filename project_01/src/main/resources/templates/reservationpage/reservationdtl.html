@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout1}">
+  
+
+<th:block layout:fragment="css">
+		<style>
+		.contentfrag{
+			margin-top: 0px;
+		}
+		.divwid {
+    		width: 650px
+    	}
+		</style>
+		
+		</th:block>
+
+	
+
+
+<div layout:fragment="content" class="contentfrag">
+
+      <!-- Page Header Start -->
+      <div class="page-header" style="background: url(/assets/img/banner1.jpg);">
+        <div class="container">
+          <div class="row">         
+            <div class="col-md-12">
+              <div class="breadcrumb-wrapper">
+                <h2 class="product-title">병원예약</h2>
+                <ol class="breadcrumb">
+                  <li><a href="#"><i class="ti-home"></i> Home</a></li>
+                  <li class="current">병원예약</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Header End -->  
+
+
+
+
+	<section class="job-detail section">
+		<div class="container">
+			<div class="row">
+				<aside id="sidebar" class="col-md-3 right-sidebar">
+					<div class="widget widget-search">
+					<div class="row" sec:authorize="isAnonymous()">
+						<h4 class="widget-title">로그인</h4>
+						<form action="/login" method="post">
+						
+							<div class="form-group is-empty">
+							
+							<input class="form-control search" name="email" type="text" placeholder="아이디"><span class="material-input"></span></div>
+							
+							<div class="form-group is-empty"><input class="form-control search" type="password" name="password" placeholder="비밀번호"><span class="material-input"></span></div>
+							<div class="form-group is-empty"><button class="pull-right btn btn-common log-btn" type="submit">로그인</button></div>
+							
+						</form>
+					</div>
+					<div class="right-sideabr">
+						
+						<div class="inner-box" sec:authorize="isAuthenticated()">
+						
+					
+						 <span th:switch="${memberDto.getRole}">
+						 	<span th:case="'PUSER'">개인회원</span>
+						 	<span th:case="'HUSER'">병원회원</span>
+						 	<span th:case="'ADMIN'">관리자</span>
+						 </span>
+						 <span style="color: black; font-weight: bold;" th:text="${memberDto.getName}"></span>
+						 <span>님, 안녕하세요</span>
+						 <span class="btn btn-logout"><a href="/logout" style="color: white;">로그아웃</a></span>
+						</div>
+					
+					</div>
+				</div>
+
+				<div class="widget widget-categories">
+					<h5 class="widget-title">병원예약</h5>
+					<ul class="cat-list">
+						<li>
+						<a href="/reservationpage/reservation">예약가능병원 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/reservationpage/totalhospital">전체병원검색 <span class="num-posts"></span></a>
+						</li>
+
+					</ul>
+				</div>
+
+			</aside>
+			<div class="col-md-9 col-sm-9 col-xs-9">
+				<div class="header-detail">
+					<div class="header-content pull-right">
+						<div class="detail-company pull-right text-right">
+						<h3>지도</h3>
+							<div class="img-thum">
+								<img class="img-responsive" src="/assets/img/jobs/recent-job-detail.jpg" alt="">
+							</div>
+							<br>
+					
+							<div class="pull-right">
+								
+					            <div class="dtlicon">
+					            
+					            <i class="ti-heart"><span style="font-weight: bold; color: black;">찜</span></i>
+					            
+					            </div>
+					            <div class="btn btn-common btn-rm">
+					            <a href="/doreservation" style="color: white;">
+					            예약하기</a></div>              
+					        </div>
+						</div>
+					<div class="clearfix">
+					<div class="meta">
+					
+					</div>
+					</div>
+					</div>
+				</div>
+				</div>
+			
+			<div class="col-md-9 col-sm-9 col-xs-9 pull-right">
+				<div class="header-detail">
+				<input type="hidden" name="hpid" class="form-control"  th:value="${hospital.hpid}" readonly="readonly">
+					<div class="header-content pull-right">
+					<div class="box" style="width: 850px">
+
+					<h3>[[${hospital.dutyName}]]</h3>
+						<br>
+						<ul class="detail-list">
+							<li>
+							
+							<strong>전화번호 </strong><span class="type-posts"></span>
+							</li>
+							<li>
+							
+							<strong>진료구분 </strong><span class="type-posts"></span>
+							</li>
+							<li>
+							
+							<strong>우편번호 </strong><span class="type-posts"></span>
+							</li>
+							<li>
+							
+							<strong>주소 </strong><span class="type-posts"></span>
+							</li>
+							<li>
+							
+							<strong>진료시간 </strong><span class="type-posts"></span>
+							</li>
+							<li>
+							
+							<strong>병원소개 </strong><span class="type-posts"></span>
+							</li>
+							<li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+		<!-- 댓글 -->	
+			<div id="comments" class="pull-left" style="width: 850px">
+				<h3 style="font-weight: bold;">이용후기(5)</h3>
+				<ol class="comments-list ">
+					<li>
+						<div class="media">
+						
+						<div class="info-body">
+						<h4 class="name">Roy Fisher</h4>
+						<p>너무좋은병원입니다.</p>
+						<span class="comment-date">Mar 02, 2016</span>
+						<a href="#" class="reply-link">답글</a>
+						<a href="#" class="reply-link">수정</a>
+						<a href="#" class="reply-link">삭제</a>
+						</div>
+						</div>
+							<ul>
+								<li>
+								<div class="media">
+								<div class="info-body">
+								<h4 class="name">Jane Smith</h4>
+								<p>감사합니다.</p>
+								<span class="comment-date">Mar 02, 2016</span>
+								<a href="#" class="reply-link">답글</a>
+								</div>
+								</div>
+								</li>
+							</ul>
+					</li>
+					<li>
+						<div class="media">
+						
+						<div class="info-body">
+						<h4 class="name">Nancy Watson</h4>
+						<p>댓글입니다.</p>
+						<span class="comment-date">Mar 02, 2016</span>
+						<a href="#" class="reply-link">답글</a>
+						</div>
+						</div>
+						<ul>
+							<li>
+								<div class="media">
+								
+								<div class="info-body">
+								<h4 class="name">Diane Evans</h4>
+								<p>대댓입니다.</p>
+								<span class="comment-date">Mar 02, 2016</span>
+								<a href="#" class="reply-link">답글</a>
+								</div>
+								</div>
+							</li>
+							<li>
+								<div class="media">
+								
+								<div class="info-body">
+								<h4 class="name">Amy Harper</h4>
+								<p>대댓입니다.</p>
+								<span class="comment-date">Mar 02, 2016</span>
+								<a href="#" class="reply-link">답글</a>
+								</div>
+								</div>
+							</li>
+						</ul>
+					</li>
+				</ol>
+				
+				<div id="respond">
+					<h2 class="respond-title">이용후기작성</h2>
+					<form action="#">
+						<div class="row">
+							<div class="col-md-5">
+							<div class="form-group is-empty">
+							<input id="author" class="form-control" name="author" type="text" value="" size="30" placeholder="작성자">
+							<span class="material-input"></span></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group is-empty">
+								<textarea id="comment" class="form-control" name="comment" cols="40" rows="3" placeholder="댓글을 입력하세요"></textarea>
+								<span class="material-input"></span>
+								</div>
+								<button type="submit" id="submit" class="btn btn-common pull-right">등록</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				</div>
+		
+			</div>
+		</div>
+ 	</div>
+</section>
+
+
+	
+   </div>
+</html>

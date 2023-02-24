@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout1}">
+  
+
+<th:block layout:fragment="css">
+		<style>
+		.contentfrag{
+			margin-top: 0px;
+		}
+		</style>
+		
+		</th:block>
+<div layout:fragment="content" class="contentfrag">
+      
+	  <div class="page-header" style="background: url(/assets/img/banner1.jpg);">
+        <div class="container">
+          <div class="row">         
+            <div class="col-md-12">
+              <div class="breadcrumb-wrapper">
+                <h2 class="product-title">문의사항</h2>
+                <ol class="breadcrumb">
+                  <li><a href="/"><i class="ti-home"></i> Home</a></li>
+                  <li class="current">문의사항</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Page Header End -->   
+
+
+
+	<section id="content">
+		<div class="container">
+			<div class="row">
+				<aside id="sidebar" class="col-md-3 right-sidebar">
+				<div class="widget widget-search">
+					<div class="row" sec:authorize="isAnonymous()">
+						<h4 class="widget-title">로그인</h4>
+						<form action="/login" method="post">
+						
+							<div class="form-group is-empty">
+							
+							<input class="form-control search" name="email" type="text" placeholder="아이디"><span class="material-input"></span></div>
+							
+							<div class="form-group is-empty"><input class="form-control search" type="password" name="password" placeholder="비밀번호"><span class="material-input"></span></div>
+							<div class="form-group is-empty"><button class="pull-right btn btn-common log-btn" type="submit">로그인</button></div>
+							
+						</form>
+					</div>
+					<div class="right-sideabr">
+						
+						<div class="inner-box" sec:authorize="isAuthenticated()">
+						
+					
+						 <span th:switch="${memberDto.getRole}">
+						 	<span th:case="'PUSER'">개인회원</span>
+						 	<span th:case="'HUSER'">병원회원</span>
+						 	<span th:case="'ADMIN'">관리자</span>
+						 </span>
+						 <span style="color: black; font-weight: bold;" th:text="${memberDto.getName}"></span>
+						 <span>님, 안녕하세요</span>
+						 <span class="btn btn-logout"><a href="/logout" style="color: white;">로그아웃</a></span>
+						</div>
+					
+					</div>
+				</div>
+		
+						<div class="widget widget-categories">
+					<h5 class="widget-title">커뮤니티</h5>
+					<ul class="cat-list">
+						<li>
+						<a href="/comunitypage/notice/noticelist">공지사항 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/comunitypage/review/reviewlist">이용후기 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/comunitypage/question/questionlist">문의사항 <span class="num-posts"></span></a>
+						</li>
+						<li>
+						<a href="/personalguide">이용안내 <span class="num-posts"></span></a>
+						<div class="widget widget-categories">
+						<ul class="cat-list">
+							<li><a href="/personalguide">&nbsp;&nbsp;&nbsp;&nbsp;
+							개인회원이용안내<span class="num-posts"></span></a>
+							</li>
+							<li><a href="/hospitalguide">&nbsp;&nbsp;&nbsp;&nbsp;
+							병원회원이용안내<span class="num-posts"></span></a>
+							</li>
+						</ul> 
+						</div>
+						</li>
+
+					</ul>
+				</div>
+		
+					</aside>
+				
+				<div class="col-md-9">
+				<form id="frm">
+					<div class="blog-post">
+					
+					
+						<div class="post-content">
+							<h3 class="post-title">[[${dto.title}]]</h3>
+							<input type="hidden" name="qno" id="qno" class="form-control"  th:value="${dto.qno}" readonly="readonly">
+							<div class="meta">
+								<span class="meta-part"><i class="ti-user"></i> [[${dto.writerName}]]</span>
+								<span class="meta-part"><i class="ti-book"></i> [[${dto.qvisitcount}]]</span>
+								<span class="meta-part"><i class="ti-calendar"></i>[[${#temporals.format(dto.updateTime, 'yyyy/MM/dd')}]]</span>
+								<span class="meta-part"><i class="ti-comment-alt"></i> [[${dto.replyCount}]]</span>
+							</div>
+							<div name="content">
+							 [[${dto.content}]]
+							</div>
+						</div>
+					
+					</div>
+					</form>
+					 <div class="pull-right">
+	                    <a th:href="@{/comunitypage/question/questionlist(qno = ${dto.qno}, page= ${requestDTO.page},
+					                   )}" >
+						<button type="button" class="btn boarderlistbtn-common">목록</button></a>
+						</div>
+						<div class="pull-right" sec:authorize="isAuthenticated()">
+						<a th:href="@{/comunitypage/question/questionedit(qno = ${dto.qno}, page= ${requestDTO.page})}">
+							<button type="button" class="btn boarderlistbtn-common" th:if="${memberDto.email == dto.writerEmail}">수정</button></a>
+							<button type="button" class="btn boarderlistbtn-common BtnRemove" th:if="${memberDto.email == dto.writerEmail} or ${memberDto.getRole == ('ADMIN')}" th:onclick="questionDelete()">삭제</button>&nbsp;
+							
+	                    </div>
+					<br>
+					<br>
+					
+					
+			<!-- 댓글 -->	
+			
+			
+			
+			
+			
+			
+			
+				<div id="comments">
+				<h3>댓글(<b th:text="${dto.replyCount}"></b>)</h3>
+				<br>
+				
+				<!-- 댓글쓰기 창 -->
+				<div id="respond">
+					
+					<form action="#">
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="form-group is-empty">
+								<textarea class="form-control" id="qrcontent" name="comment" cols="45" rows="3" placeholder="댓글을 작성하세요"></textarea>
+								<span class="material-input"></span>
+								</div>
+								<div class="form-group is-empty" sec:authorize="isAuthenticated()">
+								<input type="hidden" id="qrwriteremail" class="form-control" name="qrwriter" th:value="${memberDto.email}">
+								<span class="material-input"></span>
+								</div>
+								
+								<div sec:authorize="isAnonymous()">
+								<button type="button" class="btn boarderlistbtn-common pull-right" onclick="questionwrite()">등록</button>
+								</div>
+								
+								<div sec:authorize="isAuthenticated()">
+								<button type="button" class="btn boarderlistbtn-common pull-right" onclick="commentPost()">등록</button>
+						
+								</div>
+								
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				<!-- 댓글리스트 -->
+				<div>
+				<ol class="comments-list" th:if="${#lists.size(questionReplyDTO)} > 0" th:each="qdto,status : ${questionReplyDTO}">
+					<li th:switch="${qdto.depth}">
+					
+					<div th:case="0" class="media">
+					
+							
+						
+						<div class="info-body" >
+						
+							<h4 class="qrname">[[${qdto.writerName}]]</h4>
+							<p class="qrreply">[[${qdto.content}]]</p>
+							<span class="comment-date">[[${#temporals.format(qdto.updateTime, 'yyyy/MM/dd')}]]</span>
+							
+							
+						
+							
+							<div sec:authorize="isAuthenticated()">
+								<input type="hidden" name="qno"   th:value="${qdto.qno}">
+								<input type="hidden" id="qrno" name="qrno" th:value="${qdto.qrno}">
+								<input type="hidden" name="qgroup"  th:value="${qdto.qgroup}" readonly="readonly">
+								
+								<button style="border: 0;" class="reply-link recommentPost" >답글</button>
+							
+								<button style="border: 0;" class="reply-link replymod" th:if="${memberDto.email == qdto.writerEmail}">수정</button>
+								<button style="border: 0;" class="reply-link replyRemove" th:if="${memberDto.email == qdto.writerEmail}">삭제</button>
+								
+							</div>
+						
+						</div>
+						
+						</div>
+						
+						
+					<ul th:case="1">
+							<li>
+								<div class="media">
+								
+								<div class="info-body">
+								<h4 class="name">[[${qdto.writerName}]]</h4>
+						<p class="rerecontent">[[${qdto.content}]]</p>
+						<span class="comment-date">[[${#temporals.format(qdto.updateTime, 'yyyy/MM/dd')}]]</span>
+						<div sec:authorize="isAuthenticated()" th:if="${memberDto.email == qdto.writerEmail} or ${memberDto.getRole == 'ADMIN'}">
+						
+						<input type="hidden" name="reqno"  th:value="${qdto.qno}">
+						<input type="hidden" name="reqrno" id="reqrno" th:value="${qdto.qrno}">
+						<input type="hidden" name="reqgroup"  th:value="${qdto.qgroup}" readonly="readonly">
+								
+						<button style="border: 0;" class="reply-link rereplymod" >수정</button>
+						<button style="border: 0;" class="reply-link rereplyRemove">삭제</button>
+						</div>	
+							
+								</div>
+								</div>
+						
+				
+							</li>
+							
+						</ul>
+						
+						
+					</li>
+					
+					
+					
+				</ol>
+				
+				<ol class="comments-list" th:unless="${#lists.size(questionReplyDTO)} > 0">
+				<li style="text-align: center; font-size: 15px;"> 등록된 댓글이 없습니다. </li>
+				</ol>
+				
+				<!-- 수정 모달창 -->
+				<div class="modal" tabindex="-1" role="dialog">
+			 		 <div class="modal-dialog" role="document">
+			  	  	<div class="modal-content">
+			      		<div class="modal-header">
+			       	 	<h5 class="modal-title"> </h5>
+			       		 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			         	 <span aria-hidden="true">&times;</span>
+			       	 </button>
+			      </div>
+			      <div class="modal-body">
+			      	<div class="form-group">
+			        	<input class="form-control" type="text" id="replyText" name="replyText" placeholder="댓글을 입력하세요">
+			      	</div>
+			      	<div class="form-group">
+			        	<input type="text" id="qqrno" name="qqrno" readonly="readonly">
+			      	</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn boarderlistbtn-common replyModify rereplyModify">수정</button>
+			         <button type="button" class="btn boarderlistbtn-common replySave">저장</button>
+			        <button type="button" class="btn boarderlistbtn-common replyClose" data-dismiss="modal">닫기</button>
+			      </div>
+			   	 </div>
+				</div>
+			   </div>	
+				
+				
+				
+					
+				</div>
+				
+				</div>
+			</div>
+			</div>
+		</div>
+		</section>
+		
+		<th:block layout:fragment="script">
+ 
+	<script th:inline="javascript">
+	
+
+
+	function questionwrite() {
+		 
+		     alert("로그인 후 이용 가능합니다.");
+ 			location.href='/login';
+   
+		                    
+		        	}
+	
+	
+
+		function questionDelete() {
+			if(confirm("정말삭제하시겠습니까?")) {
+				var frm=$('#frm');
+				frm.attr("action", "/comunitypage/question/remove");
+				frm.attr("method", "post")
+				frm.submit();
+			}
+		}
+		
+		
+		/*댓글 등록*/
+		function commentPost() {
+		    $.ajax({
+		        type: "post",
+		        url: "/reply/post",
+		        data: {"content": $("#qrcontent").val(), "qno": $("#qno").val()},
+		        success: function (data) {
+		            if (data.result == "success") {
+		                location.reload();
+		            }
+		        },
+		        error: function (request, status, error) {
+		            alert("code: " + request.status + "\n" + "error: " + error);
+		        }
+
+		    });
+		}
+		
+		/*댓글 수정버튼 클릭*/
+		$(".replymod").click(function(){	
+				
+			
+			
+				
+				var target = $(this);
+				var qrno = target.prev().prev().prev().val();
+				var content = target.parent().parent().find('.qrreply').html();
+				console.log(qrno);
+				var modal = $(".modal");
+				$('input[name="replyText"]').val(content).html();
+			
+				$('input[name="qqrno"]').val(qrno);
+				$('.modal-title').text("댓글수정");
+				$('.modal-footer .btn').hide();
+				$('.replyModify, .replyClose').show();
+				modal.modal('show');
+				
+				//모달창 떴을 때 수정버튼 !!
+				$(".replyModify").click(function(){
+					
+					var qrno = $('input[name="qqrno"]').val();
+					var content = $('input[name="replyText"]').val();
+					var reply = {
+							"qrno": qrno,
+							
+							"content": content,
+							
+					}
+					
+					console.log(reply);
+					$.ajax({
+						url:"/reply/"+ qrno,
+						method: "put",
+						data: JSON.stringify(reply),
+						contentType:'application/json; charset=utf-8',
+						success: function(result){
+							console.log(result);
+							if(result === 'success'){
+							alert("댓글이 수정되었습니다.");
+							location.reload();
+							modal.modal('hide');
+							
+							}else {
+			                    alert("오류가 발생하였습니다. 다시 시도해주세요")
+			                }
+			                
+						}
+					});
+				});
+			   
+			});
+			
+			//댓글 삭제
+			$(".replyRemove").click(function() {
+				if(confirm("댓글 삭제시 대댓글까지 삭제됩니다."
+						+"정말삭제하시겠습니까?")) {
+					
+					var target = $(this);
+					
+					var qrno = target.prev().prev().prev().prev().val();
+				console.log(qrno);
+				$.ajax({
+					url:"/reply/"+ qrno,
+					method: "delete",
+					success: function(result){
+						console.log(result);
+						if(result === 'success'){
+						alert("댓글이 삭제되었습니다.");
+						location.reload();
+						
+						}
+					}
+				});
+				}
+			});
+		
+			/*대댓글 등록*/
+			
+		
+		
+			$(".recommentPost").click(function() {
+				var target = $(this);
+				var qrno = target.prev().prev().val();
+				console.log(qrno);
+				
+				
+				var modal = $(".modal");
+				$('input[name="replyText"]').val("").html();
+			
+				$('input[name="qqrno"]').val(qrno);
+				$('.modal-title').text("답글작성");
+				$('.modal-footer .btn').hide();
+				$('.replySave, .replyClose').show();
+				modal.modal('show');
+				
+				
+				
+				$(".replySave").click(function(){
+					console.log(qrno);
+			    $.ajax({
+			        type: "post",
+			        url: "/reply/recomment/post",
+			        data: {"content": $('input[name="replyText"]').val(), "qno": $("#qno").val()
+			        	, "qgroup" : qrno},
+			        success: function (data) {
+			            if (data.result == "success") {
+			                location.reload();
+			            }
+			        },
+			        error: function (request, status, error) {
+			            alert("code: " + request.status + "\n" + "error: " + error);
+			        }
+
+			    });
+				});
+			})
+			
+			//대댓글 수정
+			$(document).on('click','.rereplymod',function(){	
+				
+				var target = $(this);
+				var qrno = target.prev().prev().val();
+				
+				
+				var content = target.parent().parent().find('.rerecontent').html();
+				console.log(qrno);
+				var modal = $(".modal");
+				$('input[name="replyText"]').val(content).html();
+			
+				$('input[name="qqrno"]').val(qrno);
+				$('.modal-title').text("댓글수정");
+				$('.modal-footer .btn').hide();
+				$('.replyModify, .replyClose').show();
+				modal.modal('show');
+				
+				$(".replyModify").click(function(){
+					
+					var qrno = $('input[name="qqrno"]').val();
+					var content = $('input[name="replyText"]').val();
+					var reply = {
+							"qrno": qrno,
+							
+							"content": content,
+							
+					}
+					
+					console.log(reply);
+					$.ajax({
+						url:"/reply/"+ qrno,
+						method: "put",
+						data: JSON.stringify(reply),
+						contentType:'application/json; charset=utf-8',
+						success: function(result){
+							console.log(result);
+							if(result === 'success'){
+							alert("댓글이 수정되었습니다.");
+							
+							modal.modal('hide');
+							location.reload();
+							}else {
+			                    alert("오류가 발생하였습니다. 다시 시도해주세요")
+			                }
+			                
+						}
+					});
+				});
+			});
+			
+			//대댓글 삭제
+			$(".rereplyRemove").click(function() {
+				if(confirm("정말삭제하시겠습니까?")) {
+				var target = $(this);
+				var qrno = target.prev().prev().prev().val();
+				console.log(qrno);
+				$.ajax({
+					url:"/reply/rereply/"+ qrno,
+					method: "delete",
+					success: function(result){
+						console.log(result);
+						if(result === 'success'){
+						alert("댓글이 삭제되었습니다.");
+						location.reload();
+						
+						}
+					}
+				});
+			};
+			
+			});
+		
+		
+	</script>
+	</th:block>
+		
+	</div>
+
+</html>
