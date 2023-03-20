@@ -12,4 +12,4 @@
 - 데이터베이스 : MySQL
 - 언어 : JAVA, SQL, HTML,CSS, Java Script, Thymeleaf
 - 기술: jQuery, Ajax
-- 프레임워크 : Spring, JPA
+- 프레임워크 : Spring Boot, JPA
